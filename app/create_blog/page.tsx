@@ -14,30 +14,33 @@ export default function CreateBlog() {
   const handleSubmit = async (e: React.FormEvent) => {
     console.log("Button Clicked");
     e.preventDefault();
-    console.log("Button Clicked");
+    const { data: userData, error } = await supabase.auth.getUser();
+     
+    if (error || !userData.user) {
+      console.error("Error getting user:", error?.message);
+      return; 
+  }
+
+    let xyz = userData.user?.id;
     
 
     const blog = {
       title,
-      AuthorID : (supabase.auth.getUser()).then((user) => {
-        console.log("User id is")
-        console.log(user.data.user?.id);
-        return user.data.user?.id;
-      }),
+      AuthorID : xyz, 
       author_Name,
       content,
-      created_at: new Date().toISOString(), 
-    };
+        created_at: new Date().toISOString(), 
+      };
 
-    const {data,error}  = await supabase.from("blog_data").insert([blog]);
-      console.log(data,error);
+    const { data: blogData, error: insertError }  = await supabase.from("blog_data").insert([blog]);
+      console.log(blogData, insertError);
 
     if (error){
       console.log("Error inserting blog:");
       // console.log(error.message);
     }
      
-    // router.push("/dashboard");
+    router.push("/dashboard");
   };
 
   return (
