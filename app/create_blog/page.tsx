@@ -14,6 +14,7 @@ export default function CreateBlog() {
   const handleSubmit = async (e: React.FormEvent) => {
     console.log("Button Clicked");
     e.preventDefault();
+    console.log("Button Clicked");
     
 
     const blog = {
@@ -60,7 +61,7 @@ export default function CreateBlog() {
           required
         />
 
-        <label htmlFor="content">Content:</label>
+        <label htmlFor="content">Conten:</label>
         <textarea
           className=" border border-black"
           onChange={(e) => setContent(e.target.value)}
