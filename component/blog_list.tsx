@@ -3,11 +3,14 @@ import Link from 'next/link'
 import { createClient } from "@/utils/supabase/client";
 import { useState,useEffect } from 'react';
 
+interface BlogData {
+  title: string;
+}
 
-
-export default function BlogList() {
+export default function BlogList({title}: BlogData) {
   const [blogData, setBlogData] = useState<{ title: string }[]>([]);
   const supabase = createClient()
+
  
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -24,13 +27,18 @@ export default function BlogList() {
     fetchBlogs();
   }, []); 
 
+  const handelData = () => {
+    console.log("Title is",title);
+  sessionStorage.setItem('title',title);
+  }
+
   return (
     <div>
-        <ul>
+        <ul >
         {blogData.map((blog, index) => (
-          <li key={index}>
-            <Link href={`/blog/${blog.title.toLowerCase().replace(/\s+/g, "-")}`}>
-              {blog.title}
+          <li className='border border-black mt-4 p-6' key={index}>
+            <Link onClick={handelData} href={`/blog`}>
+              {blog.title} 
             </Link>
           </li>
         ))}
