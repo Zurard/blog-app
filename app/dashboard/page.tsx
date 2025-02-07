@@ -4,10 +4,19 @@ import { Button } from "@/components/ui/button";
 import BlogList from "@/component/blog_list";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
+import { useState,useEffect } from "react";
+import { json } from "stream/consumers";
 
 export default function Dashboard() {
   const router = useRouter();
-
+  const [title, settitle] = useState("");
+  useEffect(() => {
+    const storedData = sessionStorage.getItem("title");
+    if (storedData) {
+      console.log("Stored data is", storedData);
+      settitle(JSON.parse(storedData));
+    }
+  }, []);
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-full">
@@ -20,7 +29,7 @@ export default function Dashboard() {
              router.push("/create_blog");
           }}> start writing</Button>
         </div>
-        <BlogList />
+        <BlogList title={title} />
       </div>
     </div>
   );
