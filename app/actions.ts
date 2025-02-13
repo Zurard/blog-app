@@ -5,6 +5,10 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 
+export async function myAction() {
+  return { message: "Action completed!" };
+}
+
 export async function login(formData: FormData) {
   const supabase = await createClient()
 
@@ -19,7 +23,7 @@ export async function login(formData: FormData) {
 
   if (error) {
     console.log(error);
-    redirect('/error')
+    alert("Invalid email or password")
   }
 
   revalidatePath('/', 'layout')
@@ -41,7 +45,7 @@ export async function signup(formData: FormData) {
   console.log(error);
 
   if (error) {
-    redirect('/error')
+    alert("Invalid email or password")
   }
 
   revalidatePath('/', 'layout')
