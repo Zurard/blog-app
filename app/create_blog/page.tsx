@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
+import { getRandomValues, randomUUID } from "crypto";
 
 export default function CreateBlog() {
   const supabase = createClient();
@@ -15,7 +16,7 @@ export default function CreateBlog() {
     console.log("Button Clicked");
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.getUser();
-     
+     console.log(userData);
     if (error || !userData.user) {
       console.error("Error getting user:", error?.message);
       return; 
@@ -23,13 +24,13 @@ export default function CreateBlog() {
 
     let xyz = userData.user?.id;
     
-
     const blog = {
+      BlogID: self.crypto.randomUUID(),
       title,
       AuthorID : xyz, 
       author_Name,
       content,
-        created_at: new Date().toISOString(), 
+      created_at: new Date().toISOString(), 
       };
 
     const { data: blogData, error: insertError }  = await supabase.from("blog_data").insert([blog]);
