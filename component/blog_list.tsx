@@ -36,7 +36,7 @@ export default function BlogList({title}: BlogData) {
     <div>
         <ul >
         {blogData.map((blog, index) => (
-          <li className='border border-black mt-4 p-6' key={index}>
+          <li className='border border-black mt-4 p-6 rounded-sm' key={index}>
             <Link onClick={handelData} href={`/blog`}>
               {blog.title} 
             </Link>
