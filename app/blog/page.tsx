@@ -7,7 +7,7 @@ export default function Blog() {
             <Button>Subscribe</Button>
         </div>
         <div>
-            <div className='text-6xl'>Blog.title</div>
+            <div className='text-6xl font-'>Blog.title</div>
             <div>Blog.description</div>
             <div>blog.author</div>
             <hr/>
