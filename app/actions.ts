@@ -38,16 +38,20 @@ export async function signup(formData: FormData) {
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
+    email_confirm: true
   }
 
   const { error } = await supabase.auth.signUp(data)
-
+  const { data: userData, error: getUserError } = await supabase.auth.getUser();
   console.log(error);
 
   if (error) {
-    alert("Invalid email or password")
+   return error.message
   }
-
-  revalidatePath('/', 'layout')
+  console.log("hello 111 : ",userData.user?.confirmed_at)
+  if (userData.user?.confirmed_at){
+    revalidatePath('/', 'layout')
   redirect('/dashboard')
+  }
+ 
 }

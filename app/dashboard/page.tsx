@@ -5,7 +5,6 @@ import BlogList from "@/component/blog_list";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { useState,useEffect } from "react";
-import { json } from "stream/consumers";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -13,10 +12,11 @@ export default function Dashboard() {
   useEffect(() => {
     const storedData = sessionStorage.getItem("title");
     if (storedData) {
-      console.log("Stored data is", storedData);
-      settitle(JSON.parse(storedData));
+        console.log("Stored data is", storedData);
+            settitle(storedData); 
     }
-  }, []);
+}, []);
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-full">

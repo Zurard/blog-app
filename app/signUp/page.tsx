@@ -1,38 +1,85 @@
-'use client'
+"use client";
 
-import { signup } from '../actions'
-import { useState } from 'react'
-import { redirect } from 'next/navigation'
-import { myAction } from '../actions'
-
+import { signup } from "../actions";
+import { useState } from "react";
+import { redirect } from "next/navigation";
+import { myAction } from "../actions";
 
 export default function signUp() {
+  const [password1, setpassword1] = useState("");
+  const [password2, setpassword2] = useState("");
+  const [phone,setphone] = useState("");
 
- const [password1,setpassword1] = useState('')
- const [password2,setpassword2] = useState('')
- 
- const checkpassword = () => {
-    if(password1 === password2){
-      return (redirect('/dashboard'))
+  const checkpassword = () => {
+    if (password1 === password2) {
+      return redirect("/dashboard");
     }
-    return (alert("passwords do not match!!"))
- }
-
-
+    // return alert("passwords do not match!!");
+  };
 
   return (
-    <form onSubmit={checkpassword} className='flex flex-col items-center justify-center mt-auto bg-stone-950 pb-10'>
-      <label className= 'text-white' htmlFor="email">Email:</label>
-      <input  onChange={e => setpassword1(e.target.value)} className='text-black border-black-200 ' id="email" name="email" type="email" required />
-      <label className= 'text-white' htmlFor="password1">Password:</label>
-      <input className='text-black' id="password" name="password" type="password" required />
-      <label className= 'text-white' htmlFor="password2">Confirm Password:</label>
-      <input onChange={e => setpassword2(e.target.value)} className='text-black' id="password" name="password" type="password" required />
-      <button className= 'text-black bg-white p-2 mt-5'onClick={checkpassword} formAction={signup} >SignUP</button>
+    <form
+      onSubmit={checkpassword}
+      className="flex flex-col items-center justify-center mt-auto bg-stone-950 pb-10"
+    >
+      <label className="text-white" htmlFor="email">
+        Email:
+      </label>
+      <input
+        onChange={(e) => setpassword1(e.target.value)}
+        className="text-black border-black-200 "
+        id="email"
+        name="email"
+        type="email"
+        required
+      />
+      <label className="text-white" htmlFor="password1">
+        Password:
+      </label>
+      <input
+        className="text-black"
+        id="password"
+        name="password"
+        type="password"
+        required
+      />
+      <label className="text-white" htmlFor="password2">
+        Confirm Password:
+      </label>
+      <input
+        onChange={(e) => setpassword2(e.target.value)}
+        className="text-black"
+        id="password"
+        name="password"
+        type="password"
+        required
+      />
+        <label className="text-white" htmlFor="password2">
+        Phone Number 
+       </label>
+      <input
+        onChange={(e) => setphone(e.target.value)}
+        className="text-black"
+        id="Phone"
+        name="Phone"
+        type="string"
+        required
+      /> 
+      <button
+        className="text-black bg-white p-2 mt-5"
+        onClick={checkpassword}
+        formAction={async (formData) => {
+          const error = await signup(formData)
+          if (error) {
+            alert(error)
+          }
+        }}
+      >
+        SignUP
+      </button>
     </form>
-  )
+  );
 }
-
 
 // import { useState } from "react"
 // import { Button } from "@/components/ui/button"
