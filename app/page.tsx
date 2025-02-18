@@ -25,7 +25,16 @@ export default function LoginPage() {
           type="password"
           required
         />
-        <button formAction={login}>Log in</button>
+        <button
+          formAction={async (formData) => {
+            const error = await login(formData);
+            if (error) {
+              alert(error);
+            }
+          }}
+        >
+          Log in
+        </button>
       </form>
       <button onClick={() => router.push("/signUp")}> Sign_Up </button>
     </div>

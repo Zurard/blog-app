@@ -14,7 +14,7 @@ export default function signUp() {
     if (password1 === password2) {
       return redirect("/dashboard");
     }
-    // return alert("passwords do not match!!");
+    return alert("passwords do not match!!");
   };
 
   return (

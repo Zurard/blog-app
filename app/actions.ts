@@ -23,7 +23,8 @@ export async function login(formData: FormData) {
 
   if (error) {
     console.log(error);
-    alert("Invalid email or password")
+    return error.message
+    // alert("Invalid email or password")
   }
 
   revalidatePath('/', 'layout')
