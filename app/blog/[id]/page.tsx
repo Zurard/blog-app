@@ -1,4 +1,4 @@
-;
+// 'use client';
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -44,11 +44,25 @@ console.log("Value of params.id:", params.id);
   }
 
   return (
-    <div>
-      <p className='text-6xl ml-4'>{blog.title}</p>
-      <p className='border border-black pd-6 w-max'>{blog.content}</p>
-      <p><strong>Author:</strong> {blog.author_Name}</p>
-      <p><strong>Published:</strong> {new Date(blog.created_at).toLocaleDateString()}</p>
-    </div>
+    // <div>
+    //   <p className='text-6xl ml-4'>{blog.title}</p>
+    //   <p className='border border-black pd-6 w-max'>{blog.content}</p>
+    //   <p><strong>Author:</strong> {blog.author_Name}</p>
+    //   <p><strong>Published:</strong> {new Date(blog.created_at).toLocaleDateString()}</p>
+    // </div>
+    <div className="p-6 m-5 max-w-2xl mx-auto bg-white rounded-xl shadow-md space-y-4">
+  <p className="text-6xl font-bold ml-4 text-gray-800">{blog.title}</p>
+  <p className="border border-black p-6 w-max bg-gray-100 rounded-lg">{blog.content}</p>
+  <p className="text-gray-600">
+    <strong className="text-gray-800">Author:</strong> {blog.author_Name}
+  </p>
+  <p className="text-gray-600">
+    <strong className="text-gray-800">Published:</strong> {new Date(blog.created_at).toLocaleDateString()}
+  </p>
+</div>
+
   );
 }
+
+
+
