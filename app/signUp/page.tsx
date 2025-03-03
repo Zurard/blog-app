@@ -61,12 +61,7 @@ export default function SignUp() {
         <button
           className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
           onClick={checkpassword}
-          formAction={async (formData) => {
-            const error = await signup(formData);
-            if (error) {
-              alert(error);
-            }
-          }}
+          formAction={signup}
         >
           Sign Up
         </button>
