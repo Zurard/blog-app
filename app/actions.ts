@@ -42,17 +42,20 @@ export async function signup(formData: FormData) {
     email_confirm: true
   }
 
+   console.log("Data for Signup: ",data)
+
   const { error } = await supabase.auth.signUp(data)
   const { data: userData, error: getUserError } = await supabase.auth.getUser();
   console.log(error);
-
   if (error) {
    return error.message
   }
-  console.log("hello 111 : ",userData.user?.confirmed_at)
   if (userData.user?.confirmed_at){
-    revalidatePath('/', 'layout')
-  redirect('/dashboard')
+  console.log("hello 111 : ",userData.user?.confirmed_at)
+  revalidatePath('/', 'layout')
+  // redirect('/userDetails')
+  return {message : "User Created Successfully"};
+  
   }
  
 }

@@ -3,70 +3,81 @@
 import { signup } from "../actions";
 import { useState } from "react";
 import { redirect } from "next/navigation";
+import { myAction } from "../actions";
 
-export default function SignUp() {
+export default function signUp() {
+  // const [email, setEmail] = useState("");
   const [password1, setpassword1] = useState("");
   const [password2, setpassword2] = useState("");
-  const [phone, setphone] = useState("");
+  // const [phone,setphone] = useState("");
 
   const checkpassword = () => {
+    console.log("password1", password1);
+    console.log("password2", password2);
+
     if (password1 === password2) {
-      return redirect("/dashboard");
+      // return redirect("/dashboard");
     }
-    return alert("Passwords do not match!");
+    else{
+      alert("passwords do not match from the frontend!!")
+    }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <form
-        onSubmit={checkpassword}
-        className="flex flex-col gap-4 p-6 bg-white shadow-md rounded-lg w-80"
+    <form
+      onSubmit={checkpassword}
+      className="flex flex-col items-center justify-center mt-auto bg-stone-950 pb-10"
+    >
+      <label className="text-white" htmlFor="email">
+        Email:
+      </label>
+      <input
+        // onChange={(e) => setEmail(e.target.value)}
+        className="text-black border-black-200 "
+        id="email"
+        name="email"
+        type="email"
+        required
+      />
+      <label className="text-white" htmlFor="password1">
+        Password:
+      </label>
+      <input
+         onChange={(e) => setpassword1(e.target.value)}
+        className="text-black"
+        id="password"
+        name="password"
+        type="password"
+        required
+      />
+      <label className="text-white" htmlFor="password2">
+        Confirm Password:
+      </label>
+      <input
+        onChange={(e) => setpassword2(e.target.value)}
+        className="text-black"
+        id="password2"
+        name="password2"
+        type="password"
+        required
+      />
+        
+      <button
+        className="text-black bg-white p-2 mt-5"
+        onClick={checkpassword}
+        formAction={async (formData) => {
+          const error = await signup(formData)
+          if (error) {
+            alert(error)
+          }
+          else {
+            alert("User Created Successfully")
+          }
+        }}
       >
-        <h2 className="text-2xl font-semibold text-center mb-4">Sign Up</h2>
-        <label htmlFor="email" className="text-sm font-medium">Email:</label>
-        <input
-          className="p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          id="email"
-          name="email"
-          type="email"
-          required
-        />
-        <label htmlFor="password1" className="text-sm font-medium">Password:</label>
-        <input
-          className="p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          id="password1"
-          name="password1"
-          type="password"
-          required
-          onChange={(e) => setpassword1(e.target.value)}
-        />
-        <label htmlFor="password2" className="text-sm font-medium">Confirm Password:</label>
-        <input
-          className="p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          id="password2"
-          name="password2"
-          type="password"
-          required
-          onChange={(e) => setpassword2(e.target.value)}
-        />
-        {/* <label htmlFor="phone" className="text-sm font-medium">Phone Number:</label>
-        <input
-          className="p-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          id="phone"
-          name="phone"
-          type="text"
-          required
-          onChange={(e) => setphone(e.target.value)}
-        /> */}
-        <button
-          className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-          onClick={checkpassword}
-          formAction={signup}
-        >
-          Sign Up
-        </button>
-      </form>
-    </div>
+        SignUP
+      </button>
+    </form>
   );
 }
 
