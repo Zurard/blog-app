@@ -27,8 +27,7 @@ export default function CreateBlog() {
     const blog = {
       BlogID: self.crypto.randomUUID(),
       BlogTitle,
-      AuthorID : xyz, 
-      AuthorName,
+      UserID : xyz,
       Content,
       CreatedAt, 
       };
