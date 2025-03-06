@@ -7,39 +7,41 @@ import { createClient } from "@/utils/supabase/client";
 export default function CreateBlog() {
   const supabase = createClient();
   const router = useRouter();
-  const [BlogTitle,setTitle] = useState("");
+  const [BlogTitle, setTitle] = useState("");
   const [AuthorName, setAuthorName] = useState("");
   const [Content, setContent] = useState("");
-  const [CreatedAt,setCreatedAt] = useState("");
+  const [CreatedAt, setCreatedAt] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     console.log("Button Clicked");
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.getUser();
-     console.log(userData);
+    console.log(userData);
     if (error || !userData.user) {
       console.error("Error getting user:", error?.message);
-      return; 
-  }
+      return;
+    }
 
     let xyz = userData.user?.id;
-    
+
     const blog = {
       BlogID: self.crypto.randomUUID(),
       BlogTitle,
-      UserID : xyz,
+      UserID: xyz,
       Content,
-      CreatedAt, 
-      };
+      CreatedAt,
+    };
 
-    const { data: blogData, error: insertError }  = await supabase.from("Blog").insert([blog]);
-      console.log(blogData, insertError);
+    const { data: blogData, error: insertError } = await supabase
+      .from("Blog")
+      .insert([blog]);
+    console.log(blogData, insertError);
 
-    if (error){
+    if (error) {
       console.log(error);
       console.log("Error inserting blog:");
     }
-     
+
     router.push("/dashboard");
   };
 
@@ -63,12 +65,12 @@ export default function CreateBlog() {
           type="text"
           required
         />
-         <label htmlFor="created_at">Created At:</label>
+        <label htmlFor="created_at">Created At:</label>
         <input
-        className=" border border-black"
-        onChange={(e) => setCreatedAt(e.target.value)}
-        id="created_at"
-        type="datetime-local"
+          className=" border border-black"
+          onChange={(e) => setCreatedAt(e.target.value)}
+          id="created_at"
+          type="datetime-local"
         />
 
         <label htmlFor="content">Content :</label>
@@ -79,7 +81,9 @@ export default function CreateBlog() {
           required
         ></textarea>
 
-        <button className="bg-red-600 rounded-e-md" type="submit">Post this Blog</button>
+        <button className="bg-red-600 rounded-e-md" type="submit">
+          Post this Blog
+        </button>
       </form>
     </div>
   );

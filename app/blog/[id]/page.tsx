@@ -31,12 +31,13 @@ export default async function Page({ params }: { params: { id: string } }) {
 //   console.log("Received params:", params);
 // console.log("Type of params.id:", typeof params.id);
 // console.log("Value of params.id:", params.id);
-
+   
+const blogId = params.id;
 
   const { data: blog, error } = await supabase
     .from('Blog')
     .select('BlogTitle, Content, CreatedAt, UserDetail (FirstName ,LastName)')
-    .eq('BlogID', params.id)
+    .eq('BlogID', blogId)
     .single();
 
 // console.log("Blog data:", blog);
@@ -53,7 +54,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <p><strong>Author:</strong> {blog.CreatedAt}</p>
       <p><strong>Published:</strong> {new Date(blog.CreatedAt).toLocaleDateString()}</p>
       <div>
-        <Comments  />
+        <Comments blogID= {blogId}/>
       </div>
     </div>
   );
