@@ -2,10 +2,12 @@
 
 import { signup } from "../actions";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { redirect } from "next/navigation";
 import { myAction } from "../actions";
 
 export default function signUp() {
+  const router = useRouter();
   // const [email, setEmail] = useState("");
   const [password1, setpassword1] = useState("");
   const [password2, setpassword2] = useState("");
@@ -23,47 +25,61 @@ export default function signUp() {
     }
   };
 
-  return (
+  return (<div className="min-h-screen flex flex-col items-center justify-center bg-amber-700 text-white p-4">
+    <div className="text-8xl font-bold" style={{ fontFamily: "var(--font-fleur-de-leah)" }}>The Diaries</div>
+    <div className="text-6xl text-amber-200 font-bold mb-6" style={{ fontFamily: "var(--font-libre-caslon-display)" }}>Sign Up</div>
+    
     <form
       onSubmit={checkpassword}
-      className="flex flex-col items-center justify-center mt-auto bg-stone-950 pb-10"
+      className="flex flex-col w-full max-w-md p-8 bg-amber-800 rounded-2xl shadow-xl border-4 border-amber-600"
     >
-      <label className="text-white" htmlFor="email">
-        Email:
-      </label>
-      <input
-        // onChange={(e) => setEmail(e.target.value)}
-        className="text-black border-black-200 "
-        id="email"
-        name="email"
-        type="email"
-        required
-      />
-      <label className="text-white" htmlFor="password1">
-        Password:
-      </label>
-      <input
-         onChange={(e) => setpassword1(e.target.value)}
-        className="text-black"
-        id="password"
-        name="password"
-        type="password"
-        required
-      />
-      <label className="text-white" htmlFor="password2">
-        Confirm Password:
-      </label>
-      <input
-        onChange={(e) => setpassword2(e.target.value)}
-        className="text-black"
-        id="password2"
-        name="password2"
-        type="password"
-        required
-      />
+      <div className="flex flex-col mb-4">
+        <label className="text-sm font-semibold mb-1" htmlFor="email">
+          Email:
+        </label>
+        <input
+          // onChange={(e) => setEmail(e.target.value)}
+          className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          id="email"
+          name="email"
+          type="email"
+          required
+          placeholder="Enter your email"
+        />
+      </div>
+      
+      <div className="flex flex-col mb-4">
+        <label className="text-sm font-semibold mb-1" htmlFor="password1">
+          Password:
+        </label>
+        <input
+          onChange={(e) => setpassword1(e.target.value)}
+          className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          id="password"
+          name="password"
+          type="password"
+          required
+          placeholder="Enter your password"
+        />
+      </div>
+      
+      <div className="flex flex-col mb-4">
+        <label className="text-sm font-semibold mb-1" htmlFor="password2">
+          Confirm Password:
+        </label>
+        <input
+          onChange={(e) => setpassword2(e.target.value)}
+          className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          id="password2"
+          name="password2"
+          type="password"
+          required
+          placeholder="Confirm your password"
+        />
+      </div>
         
       <button
-        className="text-black bg-white p-2 mt-5"
+        className="w-full mt-4 py-2 bg-yellow-400 text-amber-900 font-semibold rounded-md hover:bg-yellow-500 transition duration-300"
         onClick={checkpassword}
         formAction={async (formData) => {
           const error = await signup(formData)
@@ -75,118 +91,21 @@ export default function signUp() {
           }
         }}
       >
-        SignUP
+        Sign Up
       </button>
     </form>
+    
+    <div className="mt-6 p-5 bg-amber-900 border-4 border-amber-600 rounded-lg shadow-md text-center">
+      <div className="text-lg font-semibold mb-3">Already have an account?</div>
+      <button 
+        className="bg-orange-500 text-white py-2 px-5 rounded-md hover:bg-orange-600 transition duration-300"
+        onClick={() => router.push("/")}
+      >
+        Log In
+      </button>
+    </div>
+  </div>
+    
   );
 }
 
-// import { useState } from "react"
-// import { Button } from "@/components/ui/button"
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { BookOpen } from "lucide-react"
-// import { redirect } from "next/navigation"
-// import { signup } from "../actions";
-
-// export default function SignUpPage() {
-//   const [email, setEmail] = useState("")
-//   const [password1, setPassword1] = useState("")
-//   const [password2, setPassword2] = useState("")
-
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault()
-//     const err= []
-//     if(password1 === password2){
-//             return (redirect('/dashboard'))
-//           }
-//     else {
-//       alert("passwords do not match!!")
-//       err.push( {msg: "passwords do not match!! " });
-//     }
-//     // Handle form submission here
-//     console.log("Form submitted:", { name, email, password1 })
-//   }
-
-//   return (
-//     <div className="min-h-screen bg-gradient-to-b from-yellow-50 to-white flex flex-col items-center justify-center p-4">
-//       <div className="w-full max-w-md">
-//         <div className="text-center mb-8">
-//           <BookOpen className="inline-block text-yellow-600 mb-2" size={48} />
-//           <h1 className="text-3xl font-bold text-yellow-800">The Diaries</h1>
-//           <p className="text-yellow-700 mt-2">Share your stories with the world</p>
-//         </div>
-//         <div className="bg-white shadow-lg rounded-lg p-8 border border-yellow-100">
-//           <h2 className="text-2xl font-semibold text-yellow-900 mb-6 text-center">Sign Up</h2>
-//           <form onSubmit={handleSubmit} className="space-y-4">
-//             {/* <div className="space-y-2">
-//               <Label htmlFor="name" className="text-yellow-800">
-//                 Name
-//               </Label>
-//               <Input
-//                 id="name"
-//                 type="text"
-//                 placeholder="Your name"
-//                 value={name}
-//                 onChange={(e) => setName(e.target.value)}
-//                 className="w-full border-yellow-200 focus:border-yellow-400 focus:ring-yellow-400"
-//                 required
-//               />
-//             </div> */}
-//             <div className="space-y-2">
-//               <Label htmlFor="email" className="text-yellow-800">
-//                 Email
-//               </Label>
-//               <Input
-//                 id="email"
-//                 type="email"
-//                 placeholder="your@email.com"
-//                 value={email}
-//                 onChange={(e) => setEmail(e.target.value)}
-//                 className="w-full border-yellow-200 focus:border-yellow-400 focus:ring-yellow-400"
-//                 required
-//               />
-//             </div>
-//             <div className="space-y-2">
-//               <Label htmlFor="password" className="text-yellow-800">
-//                 Password
-//               </Label>
-//               <Input
-//                 id="password"
-//                 type="password"
-//                 placeholder="••••••••"
-//                 value={password1}
-//                 onChange={(e) => setPassword1(e.target.value)}
-//                 className="w-full border-yellow-200 focus:border-yellow-400 focus:ring-yellow-400"
-//                 required
-//               />
-//             </div>
-//             <div className="space-y-2">
-//               <Label htmlFor="Confirm password" className="text-yellow-800">
-//                 Confirm Password
-//               </Label>
-//               <Input
-//                 id="confirm password"
-//                 type="password"
-//                 placeholder="••••••••"
-//                 value={password2}
-//                 onChange={(e) => setPassword2(e.target.value)}
-//                 className="w-full border-yellow-200 focus:border-yellow-400 focus:ring-yellow-400"
-//                 required
-//               />
-//             </div>
-//             <Button type="submit" formAction={signup} className="w-full bg-yellow-500 hover:bg-yellow-600 text-white">
-//               Create Account
-//             </Button>
-//           </form>
-//         </div>
-//         <p className="text-center mt-4 text-yellow-700">
-//           Already have an account?{" "}
-//           <a href="#" className="text-yellow-600 hover:underline">
-//             Log in
-//           </a>
-//         </p>
-//       </div>
-//     </div>
-//   )
-// }

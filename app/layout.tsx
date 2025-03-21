@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono , Orbitron ,Libre_Caslon_Display ,Fleur_De_Leah } from "next/font/google";
 import "./globals.css";
+import { Variable } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +12,24 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
+  subsets: ["latin"],
+});
+
+const libreCaslonDisplay = Libre_Caslon_Display({
+  variable: "--font-libre-caslon-display",
+  subsets: ["latin"],
+  weight: "400",
+});
+
+const fleurDeLeah = Fleur_De_Leah({
+  variable: "--font-fleur-de-leah",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,7 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${orbitron.variable} ${libreCaslonDisplay.variable} ${fleurDeLeah.variable} antialiased`}
       >
         {children}
       </body>

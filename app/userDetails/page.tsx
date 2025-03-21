@@ -57,127 +57,143 @@ export default function UserDetails() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6">User Details</h1>
-      <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-        <label
-          htmlFor="user_Firstname"
-          className="block text-sm font-medium text-gray-700"
-        >
-          First Name:
-        </label>
-        <input
-          onChange={(e) => setuserFirstName(e.target.value)}
-          type="text"
-          id="user_Firstname"
-          name="user_Firstname"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <label
-          htmlFor="user_Lastname"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Last Name:
-        </label>
-        <input
-          onChange={(e) => setuserLastName(e.target.value)}
-          type="text"
-          id="user_Lastname"
-          name="user_Lastname"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <label
-          htmlFor="age"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Age:
-        </label>
-        <input
-          onChange={(e) => setAge(e.target.value)}
-          type="text"
-          id="age"
-          name="age"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-        <label
-          htmlFor="country"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Country:
-        </label>
-        <input
-          onChange={(e) => setcountry(e.target.value)}
-          type="text"
-          id="country"
-          name="country"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <label
-          htmlFor="state"
-          className="block text-sm font-medium text-gray-700"
-        >
-          State:
-        </label>
-        <input
-          onChange={(e) => setState(e.target.value)}
-          type="text"
-          id="state"
-          name="state"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <label
-          htmlFor="city"
-          className="block text-sm font-medium text-gray-700"
-        >
-          City:
-        </label>
-        <input
-          onChange={(e) => setcity(e.target.value)}
-          type="text"
-          id="city"
-          name="city"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <label
-          htmlFor="locality"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Locality:
-        </label>
-        <input
-          onChange={(e) => setlocality(e.target.value)}
-          type="text"
-          id="locality"
-          name="locality"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <label
-          htmlFor="pincode"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Pincode:
-        </label>
-        <input
-          onChange={(e) => setpincode(e.target.value)}
-          type="text"
-          id="pincode"
-          name="pincode"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-          required
-        />
-        <button
-          type="submit"
-          className="mt-4 w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          Submit
-        </button>
-      </form>
-    </div>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-amber-700 text-white p-4">
+  <div className="text-7xl font-bold" style={{ fontFamily: "var(--font-fleur-de-leah)" }}>The Diaries</div>
+  <div className="text-6xl text-amber-200 font-bold mb-6" style={{ fontFamily: "var(--font-libre-caslon-display)" }}>User Details</div>
+  
+  <div className="w-full max-w-2xl p-8 bg-amber-800 rounded-2xl shadow-xl border border-amber-600">
+    <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+      {/* First row */}
+      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col flex-1">
+          <label htmlFor="user_Firstname" className="text-sm font-semibold mb-1">
+            First Name:
+          </label>
+          <input
+            onChange={(e) => setuserFirstName(e.target.value)}
+            type="text"
+            id="user_Firstname"
+            name="user_Firstname"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+        
+        <div className="flex flex-col flex-1">
+          <label htmlFor="user_Lastname" className="text-sm font-semibold mb-1">
+            Last Name:
+          </label>
+          <input
+            onChange={(e) => setuserLastName(e.target.value)}
+            type="text"
+            id="user_Lastname"
+            name="user_Lastname"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+      </div>
+      
+      {/* Second row */}
+      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col flex-1">
+          <label htmlFor="age" className="text-sm font-semibold mb-1">
+            Age:
+          </label>
+          <input
+            onChange={(e) => setAge(e.target.value)}
+            type="text"
+            id="age"
+            name="age"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+          />
+        </div>
+        
+        <div className="flex flex-col flex-1">
+          <label htmlFor="country" className="text-sm font-semibold mb-1">
+            Country:
+          </label>
+          <input
+            onChange={(e) => setcountry(e.target.value)}
+            type="text"
+            id="country"
+            name="country"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+      </div>
+      
+      {/* Third row */}
+      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col flex-1">
+          <label htmlFor="state" className="text-sm font-semibold mb-1">
+            State:
+          </label>
+          <input
+            onChange={(e) => setState(e.target.value)}
+            type="text"
+            id="state"
+            name="state"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+        
+        <div className="flex flex-col flex-1">
+          <label htmlFor="city" className="text-sm font-semibold mb-1">
+            City:
+          </label>
+          <input
+            onChange={(e) => setcity(e.target.value)}
+            type="text"
+            id="city"
+            name="city"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+      </div>
+      
+      {/* Fourth row */}
+      <div className="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col flex-1">
+          <label htmlFor="locality" className="text-sm font-semibold mb-1">
+            Locality:
+          </label>
+          <input
+            onChange={(e) => setlocality(e.target.value)}
+            type="text"
+            id="locality"
+            name="locality"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+        
+        <div className="flex flex-col flex-1">
+          <label htmlFor="pincode" className="text-sm font-semibold mb-1">
+            Pincode:
+          </label>
+          <input
+            onChange={(e) => setpincode(e.target.value)}
+            type="text"
+            id="pincode"
+            name="pincode"
+            className="w-full p-2 rounded-md border border-amber-500 bg-amber-700 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-300"
+            required
+          />
+        </div>
+      </div>
+      
+      <button
+        type="submit"
+        className="w-full mt-6 py-2 bg-yellow-400 text-amber-900 font-semibold rounded-md hover:bg-yellow-500 transition duration-300"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
   );
 }

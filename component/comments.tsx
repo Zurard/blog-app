@@ -7,9 +7,11 @@ interface CommentsProps {
 
 export default function Comments({blogID}: CommentsProps) {
     return(
-        <div className="max-w-screen-xl mx-auto mt-10 p-6 bg-white rounded-lg">
-        <AddComment blogID={blogID}  />
-        <CommentList blogID={blogID}/>
+        <div className="max-w-4xl mx-auto mt-16">
+        <div className="bg-white/10 backdrop-blur-md rounded-xl border border-white/20 p-6 md:p-8 shadow-xl">
+          <AddComment blogID={blogID} />
+          <CommentList blogID={blogID} Comment="Sample Comment" />
         </div>
+      </div>
     )
 }

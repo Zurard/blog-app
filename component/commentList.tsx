@@ -1,11 +1,11 @@
 'use client';
 
 import { createClient } from "@/utils/supabase/client";
-import { User } from "lucide-react";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, } from "react";
 
 interface CommentData {
   blogID: string;
+  Comment: string;
 }
 
 export default function CommentList({ blogID }: CommentData) {
@@ -25,7 +25,7 @@ export default function CommentList({ blogID }: CommentData) {
         console.log("Fetched data:", data);
         setCommentData(
           data.map((comment: any) => ({
-            comment: comment.Comment,
+            Comment: comment.Comment,
             UserID: comment.UserID,
             blogID: comment.blogID,
           }))
@@ -37,21 +37,16 @@ export default function CommentList({ blogID }: CommentData) {
 
   return (
     <div>
-      {/* <ul>
+      <ul className="space-y-4">
         {commmentData.map((comment) => (
           <li
-            className="border border-black mt-4 p-6 rounded-sm"
-            key={comment.blogID}
+            className="bg-white/10 backdrop-blur-md rounded-lg border border-white/20 p-5 text-white/90 shadow-sm transition-all hover:border-cyan-500/30"
+            key={self.crypto.randomUUID()}
           >
-            <Link
-              onClick={() => handleData(blog.title)}
-              href={`/blog/${blog.BlogID}`}
-            >
-              {(title = blog.title)}
-            </Link>
+            {comment.Comment}
           </li>
         ))}
-      </ul> */}
+      </ul>
     </div>
   );
 }

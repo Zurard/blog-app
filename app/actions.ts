@@ -49,15 +49,14 @@ export async function signup(formData: FormData) {
 
   const { error } = await supabase.auth.signUp(data)
   const { data: userData, error: getUserError } = await supabase.auth.getUser();
-  console.log("this is the error",error);
+  // console.log("this is the error",error);
   if (error) {
    return error.message
   }
   if (userData.user?.confirmed_at){
-  console.log("hello 111 : ",userData.user?.confirmed_at)
+  // console.log("hello 111 : ",userData.user?.confirmed_at)
   revalidatePath('/', 'layout')
-  // redirect('/userDetails')
-  return {message : "Verification email sent"};
+  redirect('/userDetails');
   
   }
  
