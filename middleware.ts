@@ -3,7 +3,10 @@ import { updateSession } from '@/utils/supabase/middleware'
 
 export async function middleware(request: NextRequest) {
   // update user's auth session
-  return await updateSession(request)
+  console.log('Updating user session'+ request.nextUrl.pathname)
+   if (request.nextUrl.pathname != '/') {
+     return updateSession(request)
+ }
 }
 
 export const config = {

@@ -18,8 +18,12 @@ export default function CreateBlog() {
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.getUser();
     console.log(userData);
-    if (error || !userData.user) {
-      console.error("Error getting user:", error?.message);
+    if (error) {
+      if (!userData.user) {
+        console.error("Error getting user:", error?.message)
+        return error;
+      }
+      console.error("Some error", error);
       return;
     }
 
