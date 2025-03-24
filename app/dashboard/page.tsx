@@ -8,10 +8,16 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Search } from "lucide-react";
 
+interface BlogData {
+  title: string;
+  BlogID: string;
+  link: string;
+}
+
 export default function Dashboard() {
   const supabase = createClient();
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState<string[]>([]);
+  const [results, setResults] = useState<BlogData[]>([]);
   const router = useRouter();
   const [title, setTitle] = useState("");
 
@@ -36,14 +42,21 @@ export default function Dashboard() {
 
     const { data, error } = await supabase
       .from("Blog")
-      .select("BlogTitle")
+      .select()
       .ilike("BlogTitle", `%${searchContent}%`);
 
     if (error) {
       console.error("Error fetching data:", error.message);
     } else {
-      const titles = data.map((item) => item.BlogTitle);
-      setResults(titles);
+      const blogs = data.map((item) => {
+        return {
+          title: item.BlogTitle,
+          link: `/blog/${item.BlogID}`,
+          BlogID: item.BlogID,
+        }
+      });
+      console.log("Blogs are", blogs);
+      setResults(blogs);
     }
   };
 
@@ -69,16 +82,15 @@ export default function Dashboard() {
 
               {results.length > 0 && (
                 <div className="absolute w-full bg-white shadow-lg rounded-lg mt-2 max-h-60 overflow-y-auto border border-[#5AB1BB]">
-                  {results.map((title, index) => (
+                  {results.map((blog, index) => (
                     <div
                       key={index}
                       className="px-4 py-2 border-b hover:bg-[#E5989B] cursor-pointer"
                       onClick={() => {
-                        setTitle(title);
-                        sessionStorage.setItem("title", title);
+                        window.location.href = blog.link;
                       }}
                     >
-                      {title}
+                      {blog.title}
                     </div>
                   ))}
                 </div>
@@ -117,9 +129,9 @@ export default function Dashboard() {
 
           <div className="w-full bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">
             <BlogList title={title} />
-          </div>
+            </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

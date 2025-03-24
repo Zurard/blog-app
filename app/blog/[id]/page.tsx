@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
-  const blogId = params.id;
+  const blogId = (await params).id;
 
   const { data: blog, error } = await supabase
     .from('Blog')
