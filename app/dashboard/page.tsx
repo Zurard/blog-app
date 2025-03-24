@@ -81,13 +81,13 @@ export default function Dashboard() {
               />
 
               {results.length > 0 && (
-                <div className="absolute w-full bg-white shadow-lg rounded-lg mt-2 max-h-60 overflow-y-auto border border-[#5AB1BB]">
+                <div className="absolute w-full bg-cyan shadow-lg rounded-lg mt-2 max-h-60 overflow-y-auto border border-[#5AB1BB]">
                   {results.map((blog, index) => (
                     <div
                       key={index}
-                      className="px-4 py-2 border-b hover:bg-[#E5989B] cursor-pointer"
+                      className="px-4 py-2 border-b border-white/20 hover:bg-cyan-500/20 cursor-pointer text-white"
                       onClick={() => {
-                        window.location.href = blog.link;
+                      window.location.href = blog.link;
                       }}
                     >
                       {blog.title}

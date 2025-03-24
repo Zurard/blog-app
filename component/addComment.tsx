@@ -13,6 +13,8 @@ export default function AddComment({ blogID }: CommentData) {
 
     const handleSubmit = async (e: React.FormEvent) => {   
         e.preventDefault();
+
+        console.log("Comment is", comment);
         
         if (typeof comment !== 'string' || !comment.trim()) {
             alert("Comment cannot be empty or just whitespace");
