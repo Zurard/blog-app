@@ -1,9 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import BlogList from "@/component/blog_list";
 import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Search } from "lucide-react";
@@ -73,7 +71,7 @@ export default function Dashboard() {
 
           <div className="w-full max-w-md mb-8">
             <div className="relative">
-              <Input
+              <input
                 onChange={handleSearch}
                 value={query}
                 placeholder="Search your diaries..."
@@ -103,7 +101,7 @@ export default function Dashboard() {
 
         <div className="w-full mx-auto pb-16">
           <div className="flex justify-end mb-8">
-            <Button
+            <button
               onClick={() => router.push("/create_blog")}
               className="relative px-6 py-2.5 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg font-medium text-white hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 group"
             >
@@ -124,7 +122,7 @@ export default function Dashboard() {
                   ></path>
                 </svg>
               </span>
-            </Button>
+            </button>
           </div>
 
           <div className="w-full bg-white/10 backdrop-blur-md rounded-2xl shadow-xl border border-white/20 p-6">

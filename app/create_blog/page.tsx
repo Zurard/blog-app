@@ -9,7 +9,6 @@ export default function CreateBlog() {
   const supabase = createClient();
   const router = useRouter();
   const [BlogTitle, setTitle] = useState("");
-  const [AuthorName, setAuthorName] = useState("");
   const [Content, setContent] = useState("");
   const [CreatedAt, setCreatedAt] = useState("");
 
@@ -27,7 +26,7 @@ export default function CreateBlog() {
       return;
     }
 
-    let xyz = userData.user?.id;
+    const xyz = userData.user?.id;
 
     const blog = {
       BlogID: self.crypto.randomUUID(),
@@ -100,7 +99,6 @@ export default function CreateBlog() {
             </label>
             <input
               className="w-full p-3 rounded-lg border border-white/20 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all"
-              onChange={(e) => setAuthorName(e.target.value)}
               id="authorName"
               type="text"
               placeholder="Your name"

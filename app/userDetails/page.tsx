@@ -23,7 +23,7 @@ export default function UserDetails() {
       console.error("Error getting user:", error?.message);
       return;
     }
-    let uid = userData.user?.id;
+    const uid = userData.user?.id;
     console.log("User ID: ", uid);
 
     const userDetails = {

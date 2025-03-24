@@ -1,7 +1,9 @@
 import { createClient } from '@supabase/supabase-js';
 import Comments from '@/component/comments';
-import { CalendarIcon, User, ArrowLeft } from 'lucide-react';
+import { CalendarIcon, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+
+
 
 export async function generateStaticParams() {
   const supabase = createClient(
@@ -17,11 +19,11 @@ export async function generateStaticParams() {
   }
 
   return blogs.map((blog) => ({
-    id: (blog.BlogID),
+    id: String(blog.BlogID)
   }));
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -41,7 +43,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 to-indigo-900 flex items-center justify-center p-4">
         <div className="bg-white/10 backdrop-blur-md rounded-xl p-8 max-w-md text-center">
           <h2 className="text-2xl font-bold text-white mb-4">Post Not Found</h2>
-          <p className="text-white/70 mb-6">The entry you're looking for could not be loaded.</p>
+          <p className="text-white/70 mb-6">{"The entry you're looking for could not be loaded."}</p>
           <Link href="/dashboard" className="px-5 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg text-white font-medium hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 inline-flex items-center">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Return to Dashboard

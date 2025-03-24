@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono , Orbitron ,Libre_Caslon_Display ,Fleur_De_Leah } from "next/font/google";
 import "./globals.css";
-import { Variable } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

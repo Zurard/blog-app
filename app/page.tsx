@@ -84,7 +84,7 @@ export default function LoginPage() {
           <div className="px-8 py-6 bg-white/5 border-t border-white/10">
             <div className="flex flex-col sm:flex-row items-center justify-between">
               <p className="text-white/70 text-sm">
-                Don't have an account?
+                {"Don't have an account?"}
               </p>
               <button 
                 className="mt-3 sm:mt-0 px-5 py-2 bg-transparent border border-white/30 rounded-lg text-white hover:bg-white/10 transition-colors flex items-center"

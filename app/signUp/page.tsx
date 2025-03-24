@@ -3,10 +3,8 @@
 import { signup } from "../actions";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { redirect } from "next/navigation";
-import { myAction } from "../actions";
 
-export default function signUp() {
+export default function SignUp() {
   const router = useRouter();
   // const [email, setEmail] = useState("");
   const [password1, setpassword1] = useState("");
