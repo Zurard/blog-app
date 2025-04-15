@@ -1,7 +1,7 @@
 'use client';
 
 import { createClient } from "@/utils/supabase/client";
-import { useState, useEffect, } from "react";
+import { useState, useEffect } from "react";
 
 interface CommentData {
   blogID: string;
@@ -9,7 +9,7 @@ interface CommentData {
 }
 
 export default function CommentList({ blogID }: CommentData) {
-  const [commmentData, setCommentData] = useState<CommentData[]>([]);
+  const [commentData, setCommentData] = useState<CommentData[]>([]);
   const supabase = createClient();
 
   useEffect(() => {
@@ -22,7 +22,6 @@ export default function CommentList({ blogID }: CommentData) {
         console.error("Error fetching comments:", error);
       }
       else {
-        console.log("Fetched data:", data);
         setCommentData(
           data.map((comment: any) => ({
             Comment: comment.Comment,
@@ -36,11 +35,11 @@ export default function CommentList({ blogID }: CommentData) {
   }, []);
 
   return (
-    <div>
-      <ul className="space-y-4">
-        {commmentData.map((comment) => (
+    <div className="flex justify-center mt-6">
+      <ul className="space-y-4 w-full max-w-3xl">
+        {commentData.map((comment) => (
           <li
-            className="bg-white/10 backdrop-blur-md rounded-lg border border-white/20 p-5 text-white/90 shadow-sm transition-all hover:border-cyan-500/30"
+            className="bg-white dark:bg-gray-800 dark:text-gray-200 rounded-lg border border-gray-200 dark:border-gray-700 p-5 text-gray-700 shadow-sm transition-all duration-300 hover:border-indigo-300 hover:shadow-md transform hover:translate-y-1"
             key={self.crypto.randomUUID()}
           >
             {comment.Comment}

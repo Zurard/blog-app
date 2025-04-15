@@ -3,8 +3,6 @@ import Comments from '@/component/comments';
 import { CalendarIcon, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-
-
 export async function generateStaticParams() {
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -40,11 +38,18 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
   if (error || !blog) {
     console.error("Error fetching blog post:", error);
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-indigo-900 flex items-center justify-center p-4">
-        <div className="bg-white/10 backdrop-blur-md rounded-xl p-8 max-w-md text-center">
-          <h2 className="text-2xl font-bold text-white mb-4">Post Not Found</h2>
-          <p className="text-white/70 mb-6">{"The entry you're looking for could not be loaded."}</p>
-          <Link href="/dashboard" className="px-5 py-2 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg text-white font-medium hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 inline-flex items-center">
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4 relative overflow-hidden transition-all">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+          <div className="absolute top-1/3 -right-4 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+        </div>
+        
+        <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl shadow-xl p-8 max-w-md text-center relative z-10">
+          <h2 className="text-2xl font-bold mb-4">Post Not Found</h2>
+          <p className="mb-6">{"The entry you're looking for could not be loaded."}</p>
+          <Link href="/dashboard" className="px-5 py-2 bg-indigo-600 dark:bg-indigo-700 rounded-lg text-white font-medium hover:bg-indigo-700 dark:hover:bg-indigo-600 shadow-md hover:shadow-lg transition-all duration-300 transform hover:translate-y-1 inline-flex items-center">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Return to Dashboard
           </Link>
@@ -59,12 +64,17 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
     day: 'numeric'
   });
 
-
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-indigo-900 text-white">
-      <div className="container mx-auto px-4 py-12">
-        <Link href="/dashboard" className="inline-flex items-center text-white/70 hover:text-cyan-300 transition-colors mb-8">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 relative overflow-hidden transition-all">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-indigo-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div className="absolute top-1/3 -right-4 w-80 h-80 bg-cyan-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12 relative z-10">
+        <Link href="/dashboard" className="inline-flex items-center text-indigo-600 dark:text-indigo-300 hover:text-indigo-800 dark:hover:text-indigo-500 transition-colors mb-8">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Dashboard
         </Link>
@@ -72,13 +82,12 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <article className="max-w-4xl mx-auto">
           <header className="mb-8 text-center">
             <h1
-              className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-300 leading-tight"
-              style={{ fontFamily: "var(--font-libre-caslon-display)" }}
+              className="text-4xl md:text-5xl font-bold mb-6 text-indigo-600 dark:text-indigo-300 leading-tight transition-all duration-300 hover:text-indigo-800 dark:hover:text-indigo-500"
             >
               {blog.BlogTitle}
             </h1>
             
-            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-gray-600 dark:text-gray-400">
               <div className="flex items-center"> 
               </div>
               <div className="flex items-center">
@@ -88,10 +97,10 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
             </div>
           </header>
 
-          <div className="bg-white/10 backdrop-blur-md rounded-xl shadow-xl border border-white/20 p-6 md:p-8 mb-12">
-            <div className="prose prose-invert max-w-none">
+          <div className="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 md:p-8 mb-12 transform transition-all duration-300 hover:shadow-2xl dark:hover:shadow-xl">
+            <div className="prose max-w-none">
               {blog.Content.split('\n').map((paragraph: string, index: number) => (
-                <p key={index} className="mb-6 text-white/90 leading-relaxed">
+                <p key={index} className="mb-6 text-gray-700 dark:text-gray-300 leading-relaxed">
                   {paragraph}
                 </p>
               ))}
@@ -99,8 +108,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
           </div>
 
           <div className="mt-16">
-            <h2 className="text-2xl font-semibold mb-6 text-white/90 border-b border-white/20 pb-2"
-                style={{ fontFamily: "var(--font-libre-caslon-display)" }}>
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-gray-100 border-b border-gray-200 dark:border-gray-700 pb-2">
               Comments
             </h2>
             <Comments blogID={blogId} />

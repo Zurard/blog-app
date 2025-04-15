@@ -39,10 +39,10 @@ export async function signup(formData: FormData) {
   const data = {
     email: formData.get('email') as string,
     password: formData.get('password') as string,
-    email_confirm: true,
-    options: {
-      emailRedirectTo: "http://localhost:3000/userDetails"
-    }
+    email_confirm: false,
+    // options: {
+    //   emailRedirectTo: "http://localhost:3000/userDetails"
+    // }
   }
 
    console.log("Data for Signup: ",data)
@@ -54,10 +54,11 @@ export async function signup(formData: FormData) {
    return error.message
   }
   if (userData.user?.confirmed_at){
-  // console.log("hello 111 : ",userData.user?.confirmed_at)
-  revalidatePath('/', 'layout')
+  console.log("hello 111 : ",userData.user)
+  revalidatePath('/', 'layout') 
   redirect('/userDetails');
   
-  }
+  } 
+  console.log("hello 222 : ",userData.user)
  
 }

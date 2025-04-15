@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { ArrowLeft, CalendarIcon, PenLine } from "lucide-react";
+import ThemeToggle from "@/component/ThemeToogle"; // Assuming this is your theme toggle component
 
 export default function CreateBlog() {
   const supabase = createClient();
@@ -11,27 +12,20 @@ export default function CreateBlog() {
   const [BlogTitle, setTitle] = useState("");
   const [Content, setContent] = useState("");
   const [CreatedAt, setCreatedAt] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("Button Clicked");
     e.preventDefault();
     const { data: userData, error } = await supabase.auth.getUser();
-    console.log(userData);
-    if (error) {
-      if (!userData.user) {
-        console.error("Error getting user:", error?.message)
-        return error;
-      }
-      console.error("Some error", error);
+    if (error || !userData.user) {
+      setError("Error fetching user data.");
       return;
     }
-
-    const xyz = userData.user?.id;
 
     const blog = {
       BlogID: self.crypto.randomUUID(),
       BlogTitle,
-      UserID: xyz,
+      UserID: userData.user?.id,
       Content,
       CreatedAt,
     };
@@ -39,115 +33,116 @@ export default function CreateBlog() {
     const { data: blogData, error: insertError } = await supabase
       .from("Blog")
       .insert([blog]);
-    console.log(blogData, insertError);
 
-    if (error) {
-      console.log(error);
-      console.log("Error inserting blog:");
+    if (insertError) {
+      setError("Error creating blog.");
+      return;
     }
 
     router.push("/dashboard");
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-slate-900 to-indigo-900 text-white p-4">
-      <div className="container mx-auto px-4 py-12">
-        <button 
-          onClick={() => router.push("/dashboard")}
-          className="flex items-center text-white/70 hover:text-cyan-300 transition-colors mb-8"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Dashboard
-        </button>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 p-4 transition-colors duration-300">
+   <ThemeToggle/>
 
-        <div className="flex flex-col items-center justify-center mb-12">
-          <h1 
-            className="text-5xl md:text-6xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-300"
-            style={{ fontFamily: "var(--font-fleur-de-leah)" }}
-          >
+      <div className="w-full max-w-md">
+        {/* Logo and Title Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-5xl font-bold text-indigo-600 dark:text-indigo-400 mb-2 transition-all duration-300 hover:text-indigo-800 hover:scale-105">
             The Diaries
           </h1>
-          <h2 
-            className="text-3xl md:text-4xl font-bold text-white/90 mb-6" 
-            style={{ fontFamily: "var(--font-libre-caslon-display)" }}
-          >
-            Create New Entry
-          </h2>
+          <p className="text-gray-600 dark:text-gray-300">Create a new blog post</p>
         </div>
 
-        <form 
-          className="w-full max-w-2xl mx-auto p-8 bg-white/10 backdrop-blur-md rounded-xl shadow-xl border border-white/20"
-          onSubmit={handleSubmit}
-        >
-          <div className="flex flex-col mb-6">
-            <label className="text-sm font-medium text-white/80 mb-2" htmlFor="title">
-              Title
-            </label>
-            <input
-              className="w-full p-3 rounded-lg border border-white/20 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all"
-              onChange={(e) => setTitle(e.target.value)}
-              id="title"
-              type="text"
-              placeholder="Enter your diary title"
-              required
-            />
+        {error && (
+          <div className="mb-4 p-4 bg-red-50 dark:bg-red-900/30 border-l-4 border-red-500 text-red-700 dark:text-red-300 rounded shadow-md transition-all duration-300 transform hover:scale-102">
+            <p>{error}</p>
           </div>
+        )}
 
-          <div className="flex flex-col mb-6">
-            <label className="text-sm font-medium text-white/80 mb-2" htmlFor="authorName">
-              Author Name
-            </label>
-            <input
-              className="w-full p-3 rounded-lg border border-white/20 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all"
-              id="authorName"
-              type="text"
-              placeholder="Your name"
-              required
-            />
-          </div>
-          
-          <div className="flex flex-col mb-6">
-            <label className="text-sm font-medium text-white/80 mb-2" htmlFor="created_at">
-              <div className="flex items-center">
-                <CalendarIcon className="w-4 h-4 mr-2" />
-                Date
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:shadow-2xl">
+          <form className="p-8" onSubmit={handleSubmit}>
+            <div className="space-y-6">
+              {/* Blog Title Field */}
+              <div className="space-y-2 group">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block transition-colors group-hover:text-indigo-600" htmlFor="title">
+                  Blog Title
+                </label>
+                <div className="relative">
+                  <input
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="block w-full pl-3 pr-3 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 hover:border-indigo-300"
+                    id="title"
+                    name="title"
+                    type="text"
+                    required
+                    placeholder="Enter blog title"
+                  />
+                </div>
               </div>
-            </label>
-            <input
-              className="w-full p-3 rounded-lg border border-white/20 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all"
-              onChange={(e) => setCreatedAt(e.target.value)}
-              id="created_at"
-              type="datetime-local"
-            />
-          </div>
 
-          <div className="flex flex-col mb-8">
-            <label className="text-sm font-medium text-white/80 mb-2" htmlFor="content">
-              <div className="flex items-center">
-                <PenLine className="w-4 h-4 mr-2" />
-                Content
+              {/* Content Field */}
+              <div className="space-y-2 group">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block transition-colors group-hover:text-indigo-600" htmlFor="content">
+                  Content
+                </label>
+                <div className="relative">
+                  <textarea
+                    onChange={(e) => setContent(e.target.value)}
+                    className="block w-full pl-3 pr-3 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 hover:border-indigo-300"
+                    id="content"
+                    name="content"
+                    rows={8}
+                    required
+                    placeholder="Write your blog content here"
+                  />
+                </div>
               </div>
-            </label>
-            <textarea
-              className="w-full p-4 rounded-lg border border-white/20 bg-white/5 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-transparent transition-all min-h-64"
-              onChange={(e) => setContent(e.target.value)}
-              id="content"
-              placeholder="Write your thoughts here..."
-              rows={8}
-              required
-            ></textarea>
-          </div>
 
-          <div className="flex justify-end">
-            <button 
-              className="px-8 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 text-white font-medium rounded-lg hover:shadow-lg hover:shadow-cyan-500/30 transition-all duration-300 flex items-center"
-              type="submit"
-            >
-              Publish Entry
-            </button>
-          </div>
-        </form>
+              {/* Date Field */}
+              <div className="space-y-2 group">
+                <label className="text-sm font-medium text-gray-700 dark:text-gray-300 block transition-colors group-hover:text-indigo-600" htmlFor="created_at">
+                  <div className="flex items-center">
+                    <CalendarIcon className="w-4 h-4 mr-2" />
+                    Date
+                  </div>
+                </label>
+                <div className="relative">
+                  <input
+                    onChange={(e) => setCreatedAt(e.target.value)}
+                    className="block w-full pl-3 pr-3 py-3 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-300 hover:border-indigo-300"
+                    id="created_at"
+                    name="created_at"
+                    type="datetime-local"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                type="submit"
+                className="w-full py-3 bg-indigo-600 rounded-lg text-white font-medium shadow-md hover:bg-indigo-700 focus:ring-4 focus:ring-indigo-300 transition-all duration-300 transform hover:translate-y-1 hover:shadow-lg flex items-center justify-center"
+              >
+                <PenLine className="h-5 w-5 mr-2" />
+                Publish Blog
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div className="flex justify-center mt-6">
+  <button 
+    className="px-5 py-2 bg-white dark:bg-gray-900 border border-indigo-300 rounded-lg text-indigo-600 hover:bg-indigo-50 dark:hover:bg-gray-700 transition-all duration-300 transform hover:scale-105 flex items-center"
+    onClick={() => router.push("/dashboard")}
+  >
+    <ArrowLeft className="h-4 w-4 mr-2" />
+    Back to Dashboard
+  </button>
+</div>
+</div>
       </div>
-    </div>
+    
   );
 }
